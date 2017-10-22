@@ -1,11 +1,4 @@
 %---------------------------------------------------------------------------
-%
-% Attendance list
-% A table for listing names and many empty boxes to check - one per week
-% Created for courses at Goethe U. Frankfurt,
-% where a regular semester usually has no more than 16 or 17 weeks at max.
-%
-%---------------------------------------------------------------------------
 % Set document class
 %------------
 \documentclass{article}
@@ -26,13 +19,13 @@
 \usepackage{tabularx}
 \usepackage{caption}
 \usepackage{array}
+\usepackage[table]{xcolor}
 
 %---------------------------------------------------------------------------
 % Set variables
 %------------
-
-\def \courseMembersTitle {Attendance List}
-\def \courseMembersCourseTitle {Tutorium Transnationale Migration in Südostasien}
+\def \courseMembersTitle {Participants}
+\def \courseMembersCourseTitle {Meeting to Form Some Kind of Informal Colloquium for Asian Studies Students}
 \def \courseMembersTimePeriod {WiSe 2017-18}
 
 %------------
@@ -43,7 +36,7 @@
 \newcounter{max}
 
 \setcounter{row}{1}
-\setcounter{max}{19} % Number of the last row + 1 (the condition is *smaller than*: 14 lines means \setcounter{max}{15}
+\setcounter{max}{7} % Number of the last row + 1 (the condition is *smaller than*: 14 lines means \setcounter{max}{15}
 
 %---------------------------------------------------------------------------
 % More
@@ -53,37 +46,43 @@
 \newtoks\tablines
 \newcommand{\addtomytablines}[1]{\tablines\expandafter{\the\tablines#1}}
 \loop
-  \expandafter\addtomytablines\expandafter{\number\arabic{row} & & & & & & & & & & & & & & & & & \\ \hline}
+\expandafter\addtomytablines\expandafter{%
+  \number\arabic{row} & & & & & & & \\ \hline
+\multicolumn{5}{r}{\emptyCell} & & & \\ \hline
+
+}
   \stepcounter{row}
 \ifnum \value{row}<\value{max}
 \repeat
 
 %------------
-% Own command for styling table headings for increased flexibility
+% Own command for styling table headings and coloring of empty table cells for increased flexibility
 %-----
 
-\newcommand{\tableHeading}[1]{ 
-  \textbf{#1}
+\newcommand{\tableHeading}[1]{
+  \scriptsize{\textbf{#1}}
+}
+
+\newcommand{\emptyCell}[1]{
+  \cellcolor[gray]{0.85}
 }
 
 %---------------------------------------------------------------------------
 
 \begin{document}
 
-\begin{table}\renewcommand{\arraystretch}{2}
+\begin{table}\renewcommand{\arraystretch}{2.5}
 
 \caption{\courseMembersTitle: \\ \courseMembersCourseTitle\ (\courseMembersTimePeriod)}
 
-
-\begin{tabularx}{\textwidth}{| c | X | c | c | c | c | c | c | c | c | c | c | c | c | c | c | c | c |}
+\begin{tabularx}{\textwidth}{| c | X | X | c | c | c | X | r |}
 
 \hline
 
-& \tableHeading{Name} & \tableHeading{ 1} & \tableHeading{ 2}  & \tableHeading{ 3} & \tableHeading{ 4} & \tableHeading{ 5}
-& \tableHeading{ 6}   & \tableHeading{ 7} & \tableHeading{ 8}  & \tableHeading{ 9} & \tableHeading{10} & \tableHeading{11}
-& \tableHeading{12} & \tableHeading{13} & \tableHeading{14}    & \tableHeading{15} & \tableHeading{16} \\ \hline
+& \tableHeading{Name} & \tableHeading{Mail} & \tableHeading{Programme} & \tableHeading{Research Interest} & \tableHeading{Interest in colloquium} & & \tableHeading{Availability (past 6 p.m.)} \\ \hline
+\multicolumn{5}{r}{\emptyCell} & \tableHeading{Interest in library tour} & \tableHeading{Interest in seminar} & \tableHeading{Availability (before 4 p.m.)} \\ \hline
 
-    \the\tablines
+   \the\tablines
 
 \end{tabularx}
 \end{table}

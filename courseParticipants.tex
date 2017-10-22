@@ -50,19 +50,27 @@
 \ifnum \value{row}<\value{max}
 \repeat
 
+%------------
+% Own command for styling table headings for increased flexibility
+%-----
+
+\newcommand{\tableHeading}[1]{ 
+  \textbf{#1}
+}
+
 %---------------------------------------------------------------------------
 
 \begin{document}
 
 \begin{table}\renewcommand{\arraystretch}{2.5}
 
-\caption{\courseMembersTitle: \\ \courseMembersCourseTitle (\courseMembersTimePeriod)}
+\caption{\courseMembersTitle: \\ \courseMembersCourseTitle\ (\courseMembersTimePeriod)}
 
 \begin{tabularx}{\textwidth}{| c | X | X | X | r |}
 
 \hline
 
-   & \textbf{Name} & \textbf{Mail} & \textbf{Programme} \\ \hline
+   & \tableHeading{Name} & \tableHeading{Mail} & \tableHeading{Programme} \\ \hline
 
    \the\tablines
 
