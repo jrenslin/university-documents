@@ -1,0 +1,72 @@
+%---------------------------------------------------------------------------
+% Set document class
+%------------
+\documentclass{article}
+
+%------------
+% Encoding
+%-----
+\usepackage[utf8]{inputenc}
+
+%------------
+% Styles
+\usepackage[a4paper,margin=2cm,landscape]{geometry}
+\pagestyle{empty}
+
+%------------
+% Required components
+%-----
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{array}
+
+%---------------------------------------------------------------------------
+% Set variables
+%------------
+\def \courseMembersTitle {Course Participants}
+\def \courseMembersCourseTitle {Tutorium Transnationale Migration in Südostasien}
+\def \courseMembersTimePeriod {WiSe 2017-18}
+
+%------------
+% Counters to determine table size
+%-----
+
+\newcounter{row}
+\newcounter{max}
+
+\setcounter{row}{1}
+\setcounter{max}{13} % Number of the last row + 1 (the condition is *smaller than*: 14 lines means \setcounter{max}{15}
+
+%---------------------------------------------------------------------------
+% More
+% Thanks: https://tex.stackexchange.com/questions/224315/loop-in-tabular-that-uses-the-count-to-access-current-line-number
+%------------
+
+\newtoks\tablines
+\newcommand{\addtomytablines}[1]{\tablines\expandafter{\the\tablines#1}}
+\loop
+  \expandafter\addtomytablines\expandafter{\number\arabic{row} & & & \\ \hline}
+  \stepcounter{row}
+\ifnum \value{row}<\value{max}
+\repeat
+
+%---------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{table}\renewcommand{\arraystretch}{2.5}
+
+\caption{\courseMembersTitle: \\ \courseMembersCourseTitle (\courseMembersTimePeriod)}
+
+\begin{tabularx}{\textwidth}{| c | X | X | X | r |}
+
+\hline
+
+   & \textbf{Name} & \textbf{Mail} & \textbf{Programme} \\ \hline
+
+   \the\tablines
+
+\end{tabularx}
+\end{table}
+
+\end{document}
